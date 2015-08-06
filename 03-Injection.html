@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>依赖注入</title>
+	<script type="text/javascript" src="js/01-resolve.js"></script>
+	<script type="text/javascript">
+/*	function server(){
+		return 'server';
+	}	
+	function route(){
+		return 'route';
+	}
+	function doSomething(){
+
+		console.log(server());
+		console.log(route());
+		
+	}
+	doSomething();*/
+	function route(){
+		return 'route';
+	}	
+	function server(){
+		return 'server';
+	}
+	function doSomething(){
+
+		console.log(server());
+		console.log(route());
+		
+	}
+	
+	// http://www.ituring.com.cn/article/68377
+	// 还是有问题 参数顺序
+	doSomething(route,server);
+	</script>
+</head>
+<body>	
+</body>
+</html>

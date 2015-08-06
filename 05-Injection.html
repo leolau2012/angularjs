@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>依赖注入</title>
+	<script type="text/javascript">
+	var service = function() {
+	    return { name: 'Service' };
+	}
+	var router = function() {
+	    return { name: 'Router' };
+	}
+	// 我们有另一个函数需要用到这两个模块。
+
+	var injector = {
+	    dependencies: {},
+	    register: function(key, value) {
+	        this.dependencies[key] = value;
+	    },
+	    resolve: function(deps, func, scope) {
+	    	var args = [];
+		    for(var i=0; i<deps.length, d=deps[i]; i++) {
+		    if(this.dependencies[d]) {
+		            args.push(this.dependencies[d]);
+		        } else {
+		            throw new Error('Can\'t resolve ' + d);
+		        }
+		    }
+		    return function() {
+		        func.apply(scope || {}, args.concat(Array.prototype.slice.call(arguments, 0)));
+		    }
+	    }
+	}
+
+	// 教程地址 http://www.ituring.com.cn/article/68377
+	injector.register('service','service');
+	injector.register('router','router');
+	// console.log(injector);
+	var doSomething = injector.resolve(['service', 'router'], function(service,router) {
+        console.log(service);
+        // console.log(service().name);为什么报错
+
+	});
+	doSomething("Other");
+	</script>
+</head>
+<body>	
+</body>
+</html>
